@@ -29,7 +29,8 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081', 
   'http://localhost:5173',
-  process.env.FRONTEND_URL
+  process.env.FRONTEND_URL,
+  /https:\/\/.*\.onrender\.com$/
 ].filter(Boolean);
 
 app.use(cors({
@@ -56,7 +57,9 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With',
+    'Accept',
+    'Origin']
 }));
 
 // Logging middleware
