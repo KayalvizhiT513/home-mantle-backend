@@ -67,6 +67,7 @@ export async function authenticateUser(
 
 export async function optionalAuth(
   req: AuthenticatedRequest,
+  _res: Response,
   next: NextFunction
 ) {
   try {

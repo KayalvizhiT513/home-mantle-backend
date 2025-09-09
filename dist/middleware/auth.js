@@ -42,7 +42,7 @@ export async function authenticateUser(req, res, next) {
         return res.status(401).json({ error: 'Authentication failed' });
     }
 }
-export async function optionalAuth(req, next) {
+export async function optionalAuth(req, _res, next) {
     try {
         const authHeader = req.headers.authorization;
         if (authHeader && authHeader.startsWith('Bearer ')) {
