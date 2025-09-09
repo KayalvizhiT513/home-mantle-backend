@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1757344847134,
+      "tag": "0000_absent_marvex",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1757353849641,
+      "tag": "0001_spotty_doctor_octopus",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1757360283655,
+      "tag": "0002_typical_prism",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1757361516976,
+      "tag": "0003_curious_serpent_society",
+      "breakpoints": true
+    }
+  ]
+}
