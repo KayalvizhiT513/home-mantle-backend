@@ -24,13 +24,13 @@ testConnection();
 app.use(helmet());
 
 // CORS configuration
-// CORS configuration
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081', 
   'http://localhost:5173',
   process.env.FRONTEND_URL,
-  /https:\/\/.*\.onrender\.com$/
+  /https:\/\/.*\.onrender\.com$/,
+  /https:\/\/.*\.ngrok-free\.app$/
 ].filter(Boolean);
 
 app.use(cors({
@@ -56,10 +56,18 @@ app.use(cors({
     }
   },
   credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With',
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
     'Accept',
-    'Origin']
+    'Origin',
+    'ngrok-skip-browser-warning',
+    'Access-Control-Allow-Origin'
+  ],
+  exposedHeaders: ['Access-Control-Allow-Origin']
 }));
 
 // Logging middleware
@@ -68,6 +76,15 @@ app.use(morgan('combined'));
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Handle preflight requests explicitly
+app.options('*', (req: express.Request, res: express.Response) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, ngrok-skip-browser-warning');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.status(200).end();
+});
 
 // API Routes
 app.use('/api/appliances', applianceRoutes);

@@ -7,7 +7,7 @@ const router = Router();
 const applianceController = new ApplianceController();
 
 // GET /api/appliances - Get all appliances with filtering (requires authentication)
-router.get('/', optionalAuth, applianceController.getAll);
+router.get('/', authenticateUser, applianceController.getAll);
 
 // POST /api/appliances - Create new appliance (requires authentication)
 router.post('/', authenticateUser, validateAppliance, applianceController.create);
