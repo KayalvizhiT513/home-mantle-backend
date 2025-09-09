@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# home-mantle-backend
-=======
 # Appliance Tracker Backend
 
 Express.js backend API for the Appliance Management System built with PostgreSQL and Drizzle ORM.
@@ -141,4 +138,4 @@ backend/
 - Validation errors return detailed field-level error messages
 - UUIDs are used for all entity IDs
 - Timestamps are automatically managed for created/updated fields
->>>>>>> master
+
