@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ApplianceController } from '../controllers/applianceController.js';
 import { validateAppliance, validateApplianceUpdate } from '../middleware/validation.js';
-import { authenticateUser, optionalAuth } from '../middleware/auth.js';
+import { authenticateUser} from '../middleware/auth.js';
 
 const router = Router();
 const applianceController = new ApplianceController();
@@ -13,7 +13,7 @@ router.get('/', authenticateUser, applianceController.getAll);
 router.post('/', authenticateUser, validateAppliance, applianceController.create);
 
 // GET /api/appliances/:id - Get appliance by ID (optional auth for now)
-router.get('/:id', optionalAuth, applianceController.getById);
+router.get('/:id', authenticateUser, applianceController.getById);
 
 // PUT /api/appliances/:id - Update appliance (requires authentication)
 router.put('/:id', authenticateUser, validateApplianceUpdate, applianceController.update);
@@ -22,9 +22,9 @@ router.put('/:id', authenticateUser, validateApplianceUpdate, applianceControlle
 router.delete('/:id', authenticateUser, applianceController.delete);
 
 // GET /api/appliances/:id/maintenance - Get maintenance tasks for appliance (optional auth)
-router.get('/:id/maintenance', optionalAuth, applianceController.getMaintenanceTasks);
+router.get('/:id/maintenance', authenticateUser, applianceController.getMaintenanceTasks);
 
 // GET /api/appliances/:id/contacts - Get service contacts for appliance (optional auth)
-router.get('/:id/contacts', optionalAuth, applianceController.getServiceContacts);
+router.get('/:id/contacts', authenticateUser, applianceController.getServiceContacts);
 
 export default router;

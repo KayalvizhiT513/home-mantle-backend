@@ -1,6 +1,13 @@
-import { pgTable, text, timestamp, integer, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, integer, boolean, uuid } from 'drizzle-orm/pg-core';
+export const users = pgTable('users', {
+    id: uuid('id').primaryKey(),
+    email: text('email').notNull().unique(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
 export const appliances = pgTable('appliances', {
     id: text('id').primaryKey(),
+    userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }), // Required for all appliances
     name: text('name').notNull(),
     brand: text('brand'),
     model: text('model'),

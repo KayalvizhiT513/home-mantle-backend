@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { db } from '../config/database.js';
 import { users } from '../models/schema.js';
 import { eq } from 'drizzle-orm';
-import { sendSuccess, sendCreated } from '../utils/responses.js';
+import { sendSuccess} from '../utils/responses.js';
 import { DatabaseError } from '../middleware/errorHandler.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { AuthenticatedRequest } from '../middleware/auth.js';

@@ -9,7 +9,23 @@ import { asyncHandler } from '../middleware/errorHandler.js';
 export class ApplianceController {
     getAll = asyncHandler(async (req, res) => {
         const { category, search, limit = '50', offset = '0' } = req.query;
+        const userId = req.user?.id;
+        // Debug logging for user_id
+        console.log('🔍 Backend - Fetching appliances');
+        console.log('👤 User ID from request:', userId);
+        console.log('👤 Full user object:', req.user);
+        console.log('🔑 Has authentication headers:', !!req.headers.authorization);
         const conditions = [];
+        // Add user filter for authenticated users - all appliances should be user-scoped
+        if (userId) {
+            conditions.push(eq(appliances.userId, userId));
+            console.log('✅ Using user-scoped query for userId:', userId);
+        }
+        else {
+            console.log('⚠️ No user ID - returning empty array');
+            // If not authenticated, return empty array since all appliances require userId
+            return sendSuccess(res, []);
+        }
         if (category && typeof category === 'string') {
             conditions.push(eq(appliances.category, category));
         }
@@ -30,6 +46,9 @@ export class ApplianceController {
                 .offset(parseInt(offset))
                 .orderBy(appliances.createdAt);
         }
+        console.log('📦 Database query result:');
+        console.log('  - Number of appliances found:', result.length);
+        console.log('  - Appliances data:', result.map((a) => ({ id: a.id, name: a.name, userId: a.userId })));
         sendSuccess(res, result);
     });
     getById = asyncHandler(async (req, res) => {
@@ -42,6 +61,18 @@ export class ApplianceController {
     });
     create = asyncHandler(async (req, res) => {
         const applianceData = req.body;
+        const userId = req.user?.id;
+        console.log('🔍 Backend - Creating appliance');
+        console.log('👤 User ID for creation:', userId);
+        console.log('🏠 Appliance data:', { name: applianceData.name, category: applianceData.category });
+        // Enforce authentication - userId is required
+        if (!userId) {
+            console.log('❌ Creation failed - no user ID');
+            return res.status(401).json({
+                error: 'Authentication required',
+                message: 'You must be logged in to create an appliance'
+            });
+        }
         const id = uuidv4();
         // Calculate warranty end date
         const purchaseDate = formatDateForDB(applianceData.purchaseDate);
@@ -49,6 +80,7 @@ export class ApplianceController {
         const newAppliance = {
             ...applianceData,
             id,
+            userId, // Always required now
             purchaseDate,
             warrantyEndDate,
             createdAt: new Date(),
@@ -56,10 +88,17 @@ export class ApplianceController {
         };
         try {
             const result = await db.insert(appliances).values(newAppliance).returning();
+            console.log('✅ Appliance created successfully:');
+            console.log('  - ID:', result[0].id);
+            console.log('  - Name:', result[0].name);
+            console.log('  - User ID:', result[0].userId);
             sendCreated(res, result[0]);
         }
         catch (error) {
-            throw new DatabaseError('Failed to create appliance');
+            console.error('Database error creating appliance:', error);
+            console.error('Appliance data:', newAppliance);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            throw new DatabaseError(`Failed to create appliance: ${errorMessage}`);
         }
     });
     update = asyncHandler(async (req, res) => {
