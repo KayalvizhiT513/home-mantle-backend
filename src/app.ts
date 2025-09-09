@@ -29,10 +29,7 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081', 
   'http://localhost:5173',
-  process.env.FRONTEND_URL,
-  // Add ngrok or other tunnel URLs
-  /https:\/\/.*\.ngrok-free\.app$/,
-  /https:\/\/.*\.ngrok\.io$/
+  process.env.FRONTEND_URL
 ].filter(Boolean);
 
 app.use(cors({
@@ -59,8 +56,7 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization',
-    'ngrok-skip-browser-warning']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Logging middleware
