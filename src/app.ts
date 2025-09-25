@@ -35,20 +35,7 @@ const allowedOrigins: (string | RegExp)[] = [
 ].filter(Boolean) as (string | RegExp)[];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    const isAllowed = allowedOrigins.some(allowedOrigin =>
-      typeof allowedOrigin === 'string'
-        ? origin === allowedOrigin
-        : allowedOrigin.test(origin)
-    );
-    if (isAllowed) {
-      callback(null, true);
-    } else {
-      console.log(`🚫 CORS blocked origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['https://home-mantle.lovable.app', 'http://localhost:8080'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
