@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { createClient } from '@supabase/supabase-js';
-import { UserController } from '../controllers/userController.js';
+import { UserController } from '../controllers/userController.ts';
 import dotenv from 'dotenv';
 
 dotenv.config();

@@ -1,11 +1,11 @@
 import { Response } from 'express';
-import { db } from '../config/database.js';
-import { users } from '../models/schema.js';
+import { db } from '../config/database.ts';
+import { users } from '../models/schema.ts';
 import { eq } from 'drizzle-orm';
-import { sendSuccess} from '../utils/responses.js';
-import { DatabaseError } from '../middleware/errorHandler.js';
-import { asyncHandler } from '../middleware/errorHandler.js';
-import { AuthenticatedRequest } from '../middleware/auth.js';
+import { sendSuccess} from '../utils/responses.ts';
+import { DatabaseError } from '../middleware/errorHandler.ts';
+import { asyncHandler } from '../middleware/errorHandler.ts';
+import { AuthenticatedRequest } from '../middleware/auth.ts';
 
 export class UserController {
   // Sync user from Supabase Auth to local users table
