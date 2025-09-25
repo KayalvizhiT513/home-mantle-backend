@@ -23,17 +23,6 @@ testConnection();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
-const allowedOrigins: (string | RegExp)[] = [
-  'http://localhost:8080',
-  'https://home-mantle.lovable.app',
-  process.env.FRONTEND_URL,
-  /https:\/\/.*\.lovable\.app$/,
-  /https:\/\/.*\.lovableproject\.com$/,
-  /https:\/\/.*\.onrender\.com$/,
-  /https:\/\/.*\.ngrok-free\.app$/
-].filter(Boolean) as (string | RegExp)[];
-
 app.use(cors({
   origin: ['https://home-mantle.lovable.app', 'http://localhost:8080'],
   credentials: true,
