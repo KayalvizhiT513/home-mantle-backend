@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { db } from '../config/database.js';
-import { appliances, maintenanceTasks, serviceContacts } from '../models/schema.js';
+import { db } from '../config/database.ts';
+import { appliances, maintenanceTasks, serviceContacts } from '../models/schema.ts';
 import { eq, ilike, and } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
-import { calculateWarrantyEndDate, formatDateForDB } from '../utils/warranty.js';
-import { sendSuccess, sendCreated, sendNoContent } from '../utils/responses.js';
-import { NotFoundError, DatabaseError } from '../middleware/errorHandler.js';
-import { asyncHandler } from '../middleware/errorHandler.js';
-import { AuthenticatedRequest } from '../middleware/auth.js';
+import { calculateWarrantyEndDate, formatDateForDB } from '../utils/warranty.ts';
+import { sendSuccess, sendCreated, sendNoContent } from '../utils/responses.ts';
+import { NotFoundError, DatabaseError } from '../middleware/errorHandler.ts';
+import { asyncHandler } from '../middleware/errorHandler.ts';
+import { AuthenticatedRequest } from '../middleware/auth.ts';
 
 export class ApplianceController {
   getAll = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {

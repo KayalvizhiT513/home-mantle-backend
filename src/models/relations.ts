@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { appliances, maintenanceTasks, serviceContacts } from './schema.js';
+import { appliances, maintenanceTasks, serviceContacts } from './schema.ts';
 
 export const appliancesRelations = relations(appliances, ({ many }) => ({
   maintenanceTasks: many(maintenanceTasks),

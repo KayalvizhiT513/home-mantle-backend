@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { MaintenanceController } from '../controllers/maintenanceController.js';
-import { validateMaintenanceTask, validateMaintenanceTaskUpdate } from '../middleware/validation.js';
+import { MaintenanceController } from '../controllers/maintenanceController.ts';
+import { validateMaintenanceTask, validateMaintenanceTaskUpdate } from '../middleware/validation.ts';
 
 const router = Router();
 const maintenanceController = new MaintenanceController();

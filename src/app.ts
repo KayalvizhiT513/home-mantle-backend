@@ -7,12 +7,12 @@ import dotenv from 'dotenv';
 // IMPORTANT: Configure dotenv BEFORE importing database module
 dotenv.config();
 
-import applianceRoutes from './routes/appliances.js';
-import maintenanceRoutes from './routes/maintenance.js';
-import serviceContactRoutes from './routes/serviceContacts.js';
-import userRoutes from './routes/users.js';
-import { errorHandler } from './middleware/errorHandler.js';
-import { testConnection } from './config/database.js';
+import applianceRoutes from './routes/appliances.ts';
+import maintenanceRoutes from './routes/maintenance.ts';
+import serviceContactRoutes from './routes/serviceContacts.ts';
+import userRoutes from './routes/users.ts';
+import { errorHandler } from './middleware/errorHandler.ts';
+import { testConnection } from './config/database.ts';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
