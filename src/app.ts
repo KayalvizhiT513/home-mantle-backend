@@ -24,15 +24,15 @@ testConnection();
 app.use(helmet());
 
 // CORS configuration
-const allowedOrigins = [
+const allowedOrigins: (string | RegExp)[] = [
   'http://localhost:8080',
   'https://home-mantle.lovable.app',
   process.env.FRONTEND_URL,
-  /https:\/\/.*\.lovable\.app$/,        // match any *.lovable.app
-  /https:\/\/.*\.lovableproject\.com$/, // match any *.lovableproject.com
+  /https:\/\/.*\.lovable\.app$/,
+  /https:\/\/.*\.lovableproject\.com$/,
   /https:\/\/.*\.onrender\.com$/,
   /https:\/\/.*\.ngrok-free\.app$/
-].filter(Boolean);
+].filter(Boolean) as (string | RegExp)[];
 
 app.use(cors({
   origin: (origin, callback) => {
