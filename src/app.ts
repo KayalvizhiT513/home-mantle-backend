@@ -26,8 +26,7 @@ app.use(helmet());
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:8080',
-  'http://localhost:8081', 
-  'http://localhost:5173',
+  'https://4155d8ed-4ed4-4165-b941-025bbb46f3ec.lovableproject.com'
   process.env.FRONTEND_URL,
   /https:\/\/.*\.onrender\.com$/,
   /https:\/\/.*\.ngrok-free\.app$/
