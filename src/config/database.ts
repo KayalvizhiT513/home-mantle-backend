@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import * as schema from '../models/schema.js';
-import * as relations from '../models/relations.js';
+import * as schema from '../models/schema.ts';
+import * as relations from '../models/relations.ts';
 
 // Function to get connection string with debugging
 function getConnectionString() {

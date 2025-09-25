@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { ServiceContactController } from '../controllers/serviceContactController.js';
-import { validateServiceContact, validateServiceContactUpdate } from '../middleware/validation.js';
+import { ServiceContactController } from '../controllers/serviceContactController.ts';
+import { validateServiceContact, validateServiceContactUpdate } from '../middleware/validation.ts';
 
 const router = Router();
 const serviceContactController = new ServiceContactController();

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { db } from '../config/database.js';
-import { serviceContacts, appliances } from '../models/schema.js';
+import { db } from '../config/database.ts';
+import { serviceContacts, appliances } from '../models/schema.ts';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
-import { sendSuccess, sendCreated, sendNoContent } from '../utils/responses.js';
-import { NotFoundError, DatabaseError } from '../middleware/errorHandler.js';
-import { asyncHandler } from '../middleware/errorHandler.js';
+import { sendSuccess, sendCreated, sendNoContent } from '../utils/responses.ts';
+import { NotFoundError, DatabaseError } from '../middleware/errorHandler.ts';
+import { asyncHandler } from '../middleware/errorHandler.ts';
 
 export class ServiceContactController {
   getAll = asyncHandler(async (req: Request, res: Response) => {

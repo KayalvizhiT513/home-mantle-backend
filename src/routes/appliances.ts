@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { ApplianceController } from '../controllers/applianceController.js';
-import { validateAppliance, validateApplianceUpdate } from '../middleware/validation.js';
-import { authenticateUser} from '../middleware/auth.js';
+import { ApplianceController } from '../controllers/applianceController.ts';
+import { validateAppliance, validateApplianceUpdate } from '../middleware/validation.ts';
+import { authenticateUser} from '../middleware/auth.ts';
 
 const router = Router();
 const applianceController = new ApplianceController();
