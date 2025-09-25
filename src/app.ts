@@ -28,45 +28,41 @@ const allowedOrigins = [
   'http://localhost:8080',
   'https://home-mantle.lovable.app',
   process.env.FRONTEND_URL,
+  /https:\/\/.*\.lovable\.app$/,        // match any *.lovable.app
+  /https:\/\/.*\.lovableproject\.com$/, // match any *.lovableproject.com
   /https:\/\/.*\.onrender\.com$/,
   /https:\/\/.*\.ngrok-free\.app$/
 ].filter(Boolean);
 
 app.use(cors({
-  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
+  origin: (origin, callback) => {
+    // Allow requests with no origin (curl, Postman, mobile apps)
     if (!origin) return callback(null, true);
-    
-    const isAllowed = allowedOrigins.some(allowedOrigin => {
-      if (typeof allowedOrigin === 'string') {
-        return origin === allowedOrigin;
-      }
-      if (allowedOrigin instanceof RegExp) {
-        return allowedOrigin.test(origin);
-      }
-      return false;
-    });
-    
+
+    const isAllowed = allowedOrigins.some(allowedOrigin =>
+      typeof allowedOrigin === 'string'
+        ? origin === allowedOrigin
+        : allowedOrigin.test(origin)
+    );
+
     if (isAllowed) {
       callback(null, true);
     } else {
-      console.log(`CORS blocked origin: ${origin}`);
+      console.log(`🚫 CORS blocked origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
-  optionsSuccessStatus: 200, // For legacy browser support
+  optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
+    'Content-Type',
+    'Authorization',
     'X-Requested-With',
     'Accept',
     'Origin',
-    'ngrok-skip-browser-warning',
-    'Access-Control-Allow-Origin'
-  ],
-  exposedHeaders: ['Access-Control-Allow-Origin']
+    'ngrok-skip-browser-warning'
+  ]
 }));
 
 // Logging middleware
