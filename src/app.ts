@@ -36,18 +36,12 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, mobile apps)
     if (!origin) return callback(null, true);
-
-    const isAllowed = allowedOrigins.some(allowedOrigin => {
-      if (!allowedOrigin) return false;   // extra guard
-    
-      if (typeof allowedOrigin === 'string') {
-        return origin === allowedOrigin;
-      }
-      return allowedOrigin.test(origin);
-    });
-
+    const isAllowed = allowedOrigins.some(allowedOrigin =>
+      typeof allowedOrigin === 'string'
+        ? origin === allowedOrigin
+        : allowedOrigin.test(origin)
+    );
     if (isAllowed) {
       callback(null, true);
     } else {
@@ -56,7 +50,6 @@ app.use(cors({
     }
   },
   credentials: true,
-  optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
     'Content-Type',
@@ -74,15 +67,6 @@ app.use(morgan('combined'));
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Handle preflight requests explicitly
-app.options('*', (req: express.Request, res: express.Response) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin, ngrok-skip-browser-warning');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.status(200).end();
-});
 
 // API Routes
 app.use('/api/appliances', applianceRoutes);
