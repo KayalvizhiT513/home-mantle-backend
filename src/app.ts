@@ -24,7 +24,7 @@ testConnection();
 app.use(helmet());
 
 app.use(cors({
-  origin: ['https://home-mantle.lovable.app', 'http://localhost:8080'],
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
