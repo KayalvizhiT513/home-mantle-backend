@@ -22,7 +22,7 @@ Express.js backend API for the Appliance Management System built with PostgreSQL
    ```
    
    Update the `.env` file with your database credentials:
-   ```env
+   ```env  
    NODE_ENV=development
    PORT=3001
    DATABASE_URL=postgresql://username:password@localhost:5432/appliance_tracker
